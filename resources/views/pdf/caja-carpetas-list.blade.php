@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Reporte</title>
+  <style>
+    .container {
+      max-width: 100%;
+      margin: auto;
+      font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+    }
+
+    .light-table {
+      width: 100%;  
+      padding-top: 0;
+      padding-bottom: 0;
+      margin-bottom: 5px;
+      text-align: left;
+    }
+
+    .leftdiv {
+      float: left;
+      position: relative;
+      width: 33%; 
+    }
+
+    .leftdiv p {
+      display: block;
+      width: 75%;
+      /* margin: 0 auto !important; */
+    }
+
+    .leftdivcontainer {
+      vertical-align: middle;
+      width: 100%;
+      text-align: center;
+    }
+
+    .clearfix:after {
+      clear: both;
+    }
+
+    .clearfix:before,
+    .clearfix:after {
+      content: " ";
+      display: table;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    table th,
+    table td {
+      border: 1px solid #807979;
+      padding: 0.625em;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    table tbody tr {
+      border: 1px solid #ddd;
+      font-size: 13px;
+      background-color: #f2f4f8;
+    }
+
+    table thead th {
+      padding-top: 6px;
+      padding-bottom: 6px;
+      background-color: #287729;
+      color: white;
+      text-transform: uppercase;
+      font-size: 0.85em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="light-table">
+      <div class="leftdivcontainer clearfix">
+        <div class="leftdiv">
+          <div style="border: 2px solid #287729; border-radius: 7px; text-align: left; width: 60%; padding: 10px;">
+            <span style="color: #000; font-weight: bold; font-size: 15px; letter-spacing: 1px;">{{ $caja->agencia->razon_social }}</span>
+          </div>
+          <div style="font-weight: bold; margin-top: 15px; text-align: left;">Total Carpetas: {{ $caja->carpetas()->count() }}</div>
+        </div>
+        <div class="leftdiv" style="margin-top: 0;">
+          <div style="color: #000; font-size: 22px; font-weight: bold; text-decoration: underline;">LISTA DETALLE DE CARPETAS</div>
+          <div style="font-weight: bold; margin-top: 15px; color: #727272;">CAJA: {{ $caja->cod_interno }}</div>
+        </div>
+        <div class="leftdiv">
+          <div style="text-align: right;"><img src="{{url('/img/logo.png')}}" style="width:180px; height:50px;"></div>
+          <div style="text-align: right;"><span style="font-weight: bold;">Fecha: </span>{{ date('d/m/Y') }}</div>
+        </div>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th width="50px">N° Declaración</th>
+          <th width="50px">N° Interno</th>
+          <th width="150px">Aduana Ingreso</th>
+          <th width="30px">Fecha A.</th>
+          <th width="30px">Estado</th>
+          <th width="30px">Registrado</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach($caja->carpetas as $carpeta)  
+            @php
+                switch ($carpeta->estado) {
+                    case 0:
+                        $estado = "PENDIENTE";
+                        break;
+                    case 1:
+                        $estado = "EN ALMACÉN";
+                        break;
+                    case 2:
+                        $estado = "RETIRADA";
+                        break;
+                    default:
+                        $estado = "RETIRADA";
+                };
+            @endphp
+          <tr>
+            <td>{{ $carpeta->nro_declaracion }}</td>
+            <td>{{ $carpeta->nro_registro }}</td>
+            <td>{{ $carpeta->aduana->text }}</td>
+            <td>{{ date('d/m/Y', strtotime($carpeta->fecha_aceptacion)) }}</td>
+            <td>{{ $estado }}</td>
+            <td>{{ date('d/m/Y', strtotime($carpeta->created_at)) }}</td>
+          </tr>
+        @endforeach
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

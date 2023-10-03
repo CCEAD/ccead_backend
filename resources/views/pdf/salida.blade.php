@@ -148,7 +148,6 @@
     <div class="row" style="margin-top: 5px; page-break-before: avoid;">
       <div style="border: 2px solid #707070; border-radius: 7px; color: black; height: 100px; padding: 7px;">
         <div style="display: inline-block; margin: 0 10px 0 0; border: 1px solid #707070; color: black; height: 60px; width: 49%">
-          <img src="{{url('/img/firma.png')}}" style="margin-left:7rem; width:220px; height: 75px;">
         </div>
         <div style="display: inline-block; border: 1px solid #707070; color: black; height: 60px; width: 49%"></div>
         <div style="display: inline-block; margin: 0 10px 0 0;border: 1px solid #707070; color: black; height: 30px; width: 49%">

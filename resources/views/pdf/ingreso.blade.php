@@ -160,7 +160,7 @@
         </div>
         <div style="display: inline-block; border: 1px solid #707070; color: black; height: 60px; width: 49%"></div>
         <div style="display: inline-block; margin: 0 10px 0 0;border: 1px solid #707070; color: black; height: 30px; width: 49%">
-          <span style="display: table; margin: 0 auto; font-weight: bold; width: 100px;">CCEAD S.A.</span>
+          <span style="display: table; margin: 0 auto; font-weight: bold; width: 130px;">CCEAD S.A.</span>
         </div>
         <div style="display: inline-block; border: 1px solid #707070; color: black; height: 30px; width: 49%">
           <span style="display: table; margin: 0 auto; font-weight: bold;">DESPACHANTE</span>

@@ -70,15 +70,15 @@ class SalidaAdminCollection extends ResourceCollection
                 'total_cajas' => $salida->cajas()->count(),
                 'total_carpetas' => $salida->carpetas()->count(),
                 'ingresado' => $salida->ingresado == 1 ? true : false,
-                'cajas' => collect($salida->cajas)->transform(function($caja) use ($salida) {
-                    return [
-                        'id' => $caja->id,
-                        'gestion' => $caja->gestion,
-                        'carpetas' => collect($caja->detalle_salida()->where('salida_id', $salida->id)->get())->transform(function($detalle){
-                            return new CarpetaAdminResource($detalle->carpetas);
-                        })
-                    ];
-                }),
+                // 'cajas' => collect($salida->cajas)->transform(function($caja) use ($salida) {
+                //     return [
+                //         'id' => $caja->id,
+                //         'gestion' => $caja->gestion,
+                //         'carpetas' => collect($caja->detalle_salida()->where('salida_id', $salida->id)->get())->transform(function($detalle){
+                //             return new CarpetaAdminResource($detalle->carpetas);
+                //         })
+                //     ];
+                // }),
                 'estado' => $estado,
                 'created_at' => Carbon::parse($salida->created_at)->format('d/m/Y'),
                 'updated_at' => Carbon::parse($salida->updated_at)->format('d/m/Y'),

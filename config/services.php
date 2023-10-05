@@ -37,6 +37,10 @@ return [
         'client_secret' => env('PASSPORT_CLIENT_SECRET'),
     ],
 
+    'server' => [
+        'url' => env('BACKEND_ENDPOINT')
+    ],
+
     'twilio' => [
         'twilio_sid' => env('TWILIO_SID'),
         'twilio_token' => env('TWILIO_TOKEN'),

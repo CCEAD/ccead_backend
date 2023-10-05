@@ -27,6 +27,10 @@ class SalidaSearch extends Search
 
     protected static function getResults(Builder $query, Request $request)
     {
-        return $query->salidasPorAgencia(get_user_agencia())->paginate($request->take);
+        if (get_user_agencia() == 1) {
+            return $query->salidasPorAgencia($request->id)->paginate($request->take);
+        } else {
+            return $query->salidasPorAgencia(get_user_agencia())->paginate($request->take);
+        }
     }
 }

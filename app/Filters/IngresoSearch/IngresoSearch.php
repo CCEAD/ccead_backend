@@ -27,6 +27,10 @@ class IngresoSearch extends Search
 
     protected static function getResults(Builder $query, Request $request)
     {
-        return $query->ingresosPorAgencia(get_user_agencia())->paginate($request->take);
+        if (get_user_agencia() == 1) {
+            return $query->ingresosPorAgencia($request->id)->paginate($request->take);
+        } else {
+            return $query->ingresosPorAgencia(get_user_agencia())->paginate($request->take);
+        }
     }
 }

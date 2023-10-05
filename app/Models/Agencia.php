@@ -32,6 +32,11 @@ class Agencia extends Model
         return static::where('id', '!=', 1)->orderBy('id', 'DESC')->select('id', 'razon_social')->get();
     }
 
+    public function scopeActiva($query)
+    {
+        return $query->where('estado', true)->where('id', '!=', 1);
+    }
+
     public function city()
     {
         return $this->belongsTo(City::class);

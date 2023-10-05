@@ -12,6 +12,7 @@
     }
 
     .center p {
+        margin-top: 8px;
         font-size: 25px;
         font-weight: bold;
     }
@@ -22,6 +23,7 @@
         <div class="center">
             <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
             <center>{!! DNS2D::getBarcodeHTML($caja['detalle'], 'QRCODE',6,6); !!}</center>
+            <p>{{ $caja['cubi'] }}</p>
         </div>
     @endforeach
 </body>

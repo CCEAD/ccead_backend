@@ -65,7 +65,7 @@ class IngresoTransformer extends Transformer
             'cajas' => collect($data['cajas'])->transform(function($caja){
                 return [
                     'id' => $caja['id'],
-                    'detalle' => $caja['agencia']['razon_social'].' | Gestión: '.$caja['gestion'].' | Interno: '.$caja['cod_interno'].' | Cant.Carpetas: '.$caja['cant_carpetas'],
+                    'detalle' => $caja['agencia']['razon_social'].' | Gestión: '.$caja['gestion'].' | Interno: '.$caja['cod_interno'].' | Cant.Carpetas: '.$caja['cant_carpetas'].' | Cubi: '.$caja['pivot']['ubigeo']['codigo'],
                     'cubi' => $caja['pivot']['ubigeo']['codigo']
                 ];
             }),

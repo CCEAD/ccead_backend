@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\SolicitudIngreso;
 
 Route::prefix('v1')->group(function () {
-
+    
     Route::get('invoice-download', [SalidaController::class, 'download']);
     Route::get('invoice', [SalidaController::class, 'test']);
 

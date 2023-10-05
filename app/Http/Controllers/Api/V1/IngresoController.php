@@ -222,8 +222,16 @@ class IngresoController extends ApiController
 
     public function ingresosPorAgenciaAdmin(Request $request)
     {
-        $ingresos = $this->ingreso->ingresosPorAgencia($request->id)->orderBy('id', $request->sort)->paginate($request->per_page);
-        return new IngresoAdminCollection($ingresos);
+        // $ingresos = $this->ingreso->ingresosPorAgencia($request->id)->orderBy('id', $request->sort)->paginate($request->per_page);
+        // return new IngresoAdminCollection($ingresos);
+
+        if ($request->filled('filter.filters')) {
+            return new IngresoAdminCollection(IngresoSearch::apply($request, $this->ingreso));
+        }
+
+        $ingresos = IngresoSearch::checkSortFilter($request, $this->ingreso->newQuery());
+
+        return new IngresoAdminCollection($ingresos->ingresosPorAgencia($request->id)->paginate($request->take)); 
     }
 
     public function ingresosPorAgencia(Request $request)

@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Representante;
 use App\Http\Controllers\Api\V1\ApiController;
 use Illuminate\Http\Request;
+use App\Filters\AgenciaSearch\AgenciaSearch;
 use App\Http\Requests\Agencia\StoreAgenciaRequest;
 use App\Http\Requests\Agencia\RegistroAgenciaRequest;
 use App\Http\Resources\Agencia\AgenciaResource;
@@ -30,8 +31,16 @@ class AgenciaController extends ApiController
 
     public function index(Request $request)
     {
-        $agencias = $this->agencia->where('id', '!=', 1)->orderBy('id', $request->sort)->paginate($request->per_page);
-        return new AgenciaCollection($agencias);
+        // $agencias = $this->agencia->where('id', '!=', 1)->orderBy('id', $request->sort)->paginate($request->per_page);
+        // return new AgenciaCollection($agencias);
+
+        if ($request->filled('filter.filters')) {
+            return new AgenciaCollection(AgenciaSearch::apply($request, $this->agencia));
+        }
+
+        $agencias = AgenciaSearch::checkSortFilter($request, $this->agencia->newQuery());
+
+        return new AgenciaCollection($agencias->activa()->paginate($request->take)); 
     }
 
     public function store(StoreAgenciaRequest $request)

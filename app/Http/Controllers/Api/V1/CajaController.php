@@ -158,13 +158,35 @@ class CajaController extends ApiController
 
     public function cajasPorAgenciaAdmin(CajasFilter $filters, Request $request)
     {
-        if($request->filled('nro')) {
-            $cajas = Caja::filter($filters)->cajasPorAgencia($request->id)->orderBy('created_at', $request->sort)->paginate($request->per_page);
-            return new CajaCollection($cajas);
-        } 
+        // if($request->filled('nro')) {
+        //     $cajas = Caja::filter($filters)->cajasPorAgencia($request->id)->orderBy('created_at', $request->sort)->paginate($request->per_page);
+        //     return new CajaCollection($cajas);
+        // } 
 
-        $cajas = $this->caja->cajasPorAgencia($request->id)->orderBy('created_at', $request->sort)->paginate($request->per_page);
-        return new CajaCollection($cajas);
+        // $cajas = $this->caja->cajasPorAgencia($request->id)->orderBy('created_at', $request->sort)->paginate($request->per_page);
+        // return new CajaCollection($cajas);
+        if ($request->filled('filter.filters')) {
+            if ($request->input('filter.filters')[0]['field'] == 'code') {
+                $codigoCarpeta = $request->input('filter.filters')[0]['value'];
+
+                $caja = $this->caja->whereHas('carpetas', function ($query) use ($codigoCarpeta) {
+                    $query->where('nro_declaracion', $codigoCarpeta)
+                        ->orWhere('nro_registro', $codigoCarpeta);
+                })->where('agencia_id', $request->id)->paginate(1);
+
+                if ($caja) {
+                    return new CajaCollection($caja);
+                } else {
+                    return new CajaCollection([]);
+                }
+            } else {
+                return new CajaCollection(CajaSearch::apply($request, $this->caja));
+            }
+        }
+
+        $cajas = CajaSearch::checkSortFilter($request, $this->caja->newQuery());
+
+        return new CajaCollection($cajas->cajasPorAgencia($request->id)->paginate($request->take)); 
     }
 
     public function cajasPorAgencia(CarpetasFilter $filters, Request $request)

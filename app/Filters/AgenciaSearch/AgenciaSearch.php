@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Filters\CajaSearch;
+namespace App\Filters\AgenciaSearch;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use App\Filters\Search;
 
-class CajaSearch extends Search
+class AgenciaSearch extends Search
 {
 	public static function checkSortFilter(Request $request, Builder $query)
     {
@@ -27,18 +27,6 @@ class CajaSearch extends Search
 
     protected static function getResults(Builder $query, Request $request)
     {
-        if ($request->url() == config('services.server.ur').'cajas/pendientes') {
-            return $query->cajasPorAgencia(get_user_agencia())->pendiente()->get();
-        }
-
-        if ($request->url() == config('services.server.ur').'cajas/activas') {
-            return $query->cajasPorAgencia(get_user_agencia())->activa()->get();
-        }
-
-        if ($request->has('id')) {
-            return $query->cajasPorAgencia($request->id)->paginate($request->take); 
-        } else {
-            return $query->cajasPorAgencia(get_user_agencia())->paginate($request->take);
-        }
+        return $query->activa()->paginate($request->take);
     }
 }

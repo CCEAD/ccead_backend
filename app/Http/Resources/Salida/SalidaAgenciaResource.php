@@ -33,7 +33,7 @@ class SalidaAgenciaResource extends JsonResource
             'fecha_aprobacion' => $this->fecha_aprobacion,
             'fecha_entrega' =>$this->fecha_entrega,
             'observacion' => $this->observacion,
-            'estado' => ['title' => $estado],
+            'estado' => $estado,
             'total_cajas' => $this->cajas()->count(),
             // 'total_carpetas' => $this->carpetas()->count(),
             'created_at' => Carbon::parse($this->created_at)->format('d/m/Y'),

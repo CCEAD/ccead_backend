@@ -221,8 +221,16 @@ class SalidaController extends ApiController
 
     public function salidasPorAgenciaAdmin(Request $request)
     {
-        $salidas = $this->salida->salidasPorAgencia($request->id)->orderBy('id', $request->sort)->paginate($request->per_page);
-        return new SalidaAdminCollection($salidas);
+        // $salidas = $this->salida->salidasPorAgencia($request->id)->orderBy('id', $request->sort)->paginate($request->per_page);
+        // return new SalidaAdminCollection($salidas);
+
+        if ($request->filled('filter.filters')) {
+            return new SalidaAdminCollection(SalidaSearch::apply($request, $this->salida));
+        }
+
+        $salidas = SalidaSearch::checkSortFilter($request, $this->salida->newQuery());
+
+        return new SalidaAdminCollection($salidas->salidasPorAgencia($request->id)->paginate($request->take)); 
     }
 
     public function salidasPorAgencia(Request $request)

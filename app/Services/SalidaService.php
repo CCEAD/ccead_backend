@@ -21,7 +21,7 @@ class SalidaService
     {
         $salida = $this->transformer->item($salida);
         $export = new PdfExport('pdf.salida', ['salida' => $salida['salida']]);
-        return $export->setMargin(2,2,2,2)->letter()->download();
+        return $export->setMargin(2,2,2,2)->legal()->download();
     }
 
     public function manyPdfDownload(Request $request) 

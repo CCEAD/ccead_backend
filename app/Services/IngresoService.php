@@ -22,7 +22,7 @@ class IngresoService
         $ingreso = $this->transformer->item($ingreso);
 
         $export = new PdfExport('pdf.ingreso', ['ingreso' => $ingreso['ingreso']]);
-        return $export->setMargin(2,2,2,2)->letter()->download();
+        return $export->setMargin(2,2,2,2)->legal()->download();
     }
 
     public function manyPdfDownload(Request $request) 

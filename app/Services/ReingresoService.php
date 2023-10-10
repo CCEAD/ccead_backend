@@ -20,7 +20,7 @@ class ReingresoService
     {
         $reingreso = $this->transformer->item($reingreso);
         $export = new PdfExport('pdf.reingreso', ['reingreso' => $reingreso['reingreso']]);
-        return $export->options()->letter()->download();
+        return $export->setMargin(2,2,2,2)->legal()->download();
     }
 
     public function manyPdfDownload(Request $request) 

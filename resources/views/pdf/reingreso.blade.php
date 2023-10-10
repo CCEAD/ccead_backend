@@ -64,6 +64,29 @@
     .table-title td {
       border: 1px solid black;
     }
+
+    .alert {
+      background-color: #f8d7da;
+      border: 1px solid #f5c6cb;
+      border-radius: 5px;
+      color: #721c24;
+      padding: 10px;
+      margin: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .alert-icon {
+      background-color: #f5c6cb;
+      color: #721c24;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+    }
   </style>
 </head>
 <body>
@@ -172,6 +195,11 @@
                       </div>
                     @endif
                   @endif
+                @else
+                <div class="alert">
+                  <div class="alert-icon">!</div>
+                  <div>Ingreso en el mismo estado.</div>
+                </div>
                 @endif
               </td>
             </tr>

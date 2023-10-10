@@ -9,7 +9,7 @@ class CajaEditResource extends JsonResource
 {
     public function toArray($request)
     {
-        switch ($this->estado_id) {
+        switch ($this->estado) {
             case 0:
                 $estado = "PENDIENTE";
                 break;

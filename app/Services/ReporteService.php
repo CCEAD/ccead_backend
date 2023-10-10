@@ -7,7 +7,7 @@ use App\Exports\PdfExport;
 
 class ReporteService
 {
-    private $views = [1 => 'pdf.reporte', 2 => 'pdf.report-customer-accounts'];
+    private $views = [1 => 'pdf.reporte', 2 => 'pdf.reporte-aduana'];
     
 
     public function __construct()
@@ -25,6 +25,9 @@ class ReporteService
         }
 
         $data['now'] = date("d/m/Y");
+        $data['total'] = collect($request->data['items'])->map(function ($items) {
+            return count($items);
+        })->sum();
 
         $export = new PdfExport($this->views[$request->data['type']], $data);
         return $export->{$export->types[$request->data['type']]}();

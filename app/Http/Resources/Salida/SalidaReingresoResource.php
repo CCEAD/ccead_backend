@@ -18,6 +18,7 @@ class SalidaReingresoResource extends JsonResource
                     'gestion' => $caja->gestion,
                     'cod_interno' => $caja->cod_interno,
                     'cod_almacen' => substr($caja->cod_almacen, 0, 8),
+                    'ingresa' => true,
                     'carpetas' => [
                         "antiguas" => collect($caja->detalle_salida()->where('salida_id', $this->id)->get())->transform(function($detalle){
                             return new CarpetaAdminResource($detalle->carpetas);
@@ -28,6 +29,9 @@ class SalidaReingresoResource extends JsonResource
                         })->get())->transform(function($carpeta){
                             return new CarpetaAdminResource($carpeta);
                         }),
+                        "pivot" => [],
+                        "retiradas" => [],
+                        "agregadas" => []
                     ]
                 ];
             })

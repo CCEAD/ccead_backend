@@ -36,6 +36,7 @@ class SalidaDetalleResource extends JsonResource
             'fecha_entrega' => Carbon::parse($this->fecha_entrega)->format('d/m/Y'),
             'observacion' => $this->observacion,
             'estado' => $estado,
+            'ingresado' => $this->ingresado == 0 ? false : true,
             'cajas' => collect($this->cajas)->transform(function($caja){
                 $cubi = collect($caja->detalle_ingreso()->where('ingreso_id', $caja->ingresos->first()->id)->get())->first()->codigo;
                 return [

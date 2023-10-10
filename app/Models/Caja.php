@@ -70,12 +70,12 @@ class Caja extends Model
 
     public function scopeActiva($query)
     {
-        return $query->where('estado_id', true);
+        return $query->where('estado', true);
     }
 
     public function scopePendiente($query)
     {
-        return $query->where('estado_id', false);
+        return $query->where('estado', false);
     }
 
     public function agencia()

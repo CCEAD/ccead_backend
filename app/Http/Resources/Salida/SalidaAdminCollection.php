@@ -67,9 +67,9 @@ class SalidaAdminCollection extends ResourceCollection
                 'fecha_aprobacion' => $salida->fecha_aprobacion,
                 'fecha_entrega' => $salida->fecha_entrega,    
                 'observacion' => $salida->observacion,
-                'total_cajas' => $salida->cajas()->count(),
-                'total_carpetas' => $salida->carpetas()->count(),
                 'ingresado' => $salida->ingresado == 1 ? true : false,
+                // 'total_cajas' => $salida->cajas()->count(),
+                // 'total_carpetas' => $salida->carpetas()->count(),
                 // 'cajas' => collect($salida->cajas)->transform(function($caja) use ($salida) {
                 //     return [
                 //         'id' => $caja->id,

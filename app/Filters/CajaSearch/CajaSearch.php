@@ -35,7 +35,7 @@ class CajaSearch extends Search
             return $query->cajasPorAgencia(get_user_agencia())->activa()->get();
         }
 
-        if ($request->has('id')) {
+        if (get_user_agencia() == 1) {
             return $query->cajasPorAgencia($request->id)->paginate($request->take); 
         } else {
             return $query->cajasPorAgencia(get_user_agencia())->paginate($request->take);

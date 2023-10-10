@@ -64,15 +64,6 @@ Route::prefix('v1')->group(function () {
         //     }
         // }
     });
-    Route::get('cajas/cubi/{caja}', [CajaController::class, 'generarCajaCubiPdf']);
-
-    //api para PI
-    Route::get('general/agencia', [ReporteController::class, 'ApiGeneralAgencia']);
-
-    Route::get('reportes/inventario/agencia', [ReporteController::class, 'totalInventarioAgencia']);
-    Route::get('reportes/total/agencia', [ReporteController::class, 'totalInvGestionAgencia']);//1
-    Route::get('reportes/general/agencia', [ReporteController::class, 'totalGeneralAgencia']);//2
-    Route::get('reportes/cajas/grafico', [ReporteController::class, 'totalCajasGrafico']);
 
     Route::group(['middleware' => ['auth:api', 'teams_permission:api', 'user_active:api']], function() {
 
@@ -122,6 +113,7 @@ Route::prefix('v1')->group(function () {
         Route::get('cajas/pendientes',  [CajaController::class, 'cajasPendientesPorAgencia']);
         Route::get('cajas/activas/{id}',  [CajaController::class, 'cajasActivasPorAgenciaAdmin']);
         Route::get('cajas/activas',  [CajaController::class, 'cajasActivasPorAgencia']);
+        Route::get('cajas/cubi/{caja}', [CajaController::class, 'generarCajaCubiPdf']);
         Route::get('cajas/carpetas/{caja}/list-pdf', [CajaController::class, 'listCarpetasCajaPdf']);
         Route::get('cajas/carpetas/{caja}/list-excel', [CajaController::class, 'listCarpetasCajaExcel']);
         Route::post('cajas/list-pdf', [CajaController::class, 'listPdf']);
@@ -176,7 +168,7 @@ Route::prefix('v1')->group(function () {
         //reingresos
         Route::post('reingresos', [ReingresoController::class, 'store'])->middleware('is_admin::api');
         Route::post('reingresos/salida', [ReingresoController::class, 'obtenerDatosReingreso'])->middleware('is_admin::api');
-        Route::post('reingresos/detalle', [ReingresoController::class, 'verDetalleReingreso'])->middleware('is_admin::api');
+        Route::post('reingresos/detalle', [ReingresoController::class, 'verDetalleReingreso']);
         Route::get('reingresos/descarga/{reingreso}', [ReingresoController::class, 'reingresoPdf']);
 
         //usuarios
@@ -188,13 +180,16 @@ Route::prefix('v1')->group(function () {
         Route::put('usuarios/{user}/password', [UserController::class, 'password']);
         Route::delete('usuarios/{user}', [UserController::class, 'destroy'])->middleware('permission:usuarios.eliminar');
 
-        //Reportes
-        Route::post('reportes/inventario/agencia', [ReporteController::class, 'totalInventarioAgencia']);
+        //Reportes - usuario
+        Route::get('reportes/inventario/agencia', [ReporteController::class, 'totalInventarioAgencia']);
         Route::get('reportes/cajas/grafico', [ReporteController::class, 'totalCajasGrafico']);
-        Route::get('reportes/general/agencia', [ReporteController::class, 'totalGeneralAgencia']);
-        //usuario
         Route::post('reportes/total/agencia', [ReporteController::class, 'totalInvGestionAgencia']);
-        Route::post('reportes/aduana/agencia', [ReporteController::class, 'totalInvGestionAgencia']);
+        Route::post('reportes/aduana/agencia', [ReporteController::class, 'totalInvAduanaAgencia']);
+        Route::post('reportes/canal/grafico', [ReporteController::class, 'totalCanalGrafico']);
+        
         Route::post('reportes/pdf_download', [ReporteController::class, 'pdfDownload']);
+
+        //Reportes
+        Route::get('reportes/general/agencia', [ReporteController::class, 'totalGeneralAgencia']);
     });
 });

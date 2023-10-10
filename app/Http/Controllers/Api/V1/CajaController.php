@@ -115,7 +115,7 @@ class CajaController extends ApiController
         DB::beginTransaction();
 
         try {
-            if ($caja->estado_id >= 1) {
+            if ($caja->estado >= 1) {
                 return response()->json(['message' => message('MSG025'), 'success' => false], 406);
             }
             $caja->update($request->all());

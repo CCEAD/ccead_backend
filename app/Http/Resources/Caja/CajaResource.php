@@ -9,7 +9,7 @@ class CajaResource extends JsonResource
 {
     public function toArray($request)
     {
-        switch ($this->estado_id) {
+        switch ($this->estado) {
             case 0:
                 $estado = "PENDIENTE";
                 break;
@@ -44,7 +44,7 @@ class CajaResource extends JsonResource
             'cant_carpetas' => $this->cant_carpetas,
             'stock_carpetas' => $this->carpetas()->where('estado', true)->count(),
             'observaciones' => $this->observaciones,
-            'estado' => ['title' => $estado],
+            'estado' => $estado,
             'ubigeo' => $cubi,
             'reg_inicial' => $this->reg_inicial,
             'reg_final' => $this->reg_final,

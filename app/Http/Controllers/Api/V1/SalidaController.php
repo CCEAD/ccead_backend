@@ -199,10 +199,13 @@ class SalidaController extends ApiController
             $salida->save();
 
             foreach ($salida->cajas as $key => $item) {
-                DB::table('caja_salida')->where(function($query) use ($item) {
-                    $query->where('caja_id', $item->id)
-                      ->where('active', 1);
-                })->update(['active' => 0]);
+
+                DB::table('cajas')->where('id', $item->id)->update(['estado' => 2]);
+
+                // DB::table('caja_ingreso')->where(function($query) use ($item) {
+                //     $query->where('caja_id', $item->id)
+                //       ->where('active', 1);
+                // })->update(['active' => 0]);
 
                 $carpetas = $item->detalle_salida()->where('caja_salida_id', $item->pivot->id)->get()->map(function ($row, $key) {
                     return $row->carpeta_id;

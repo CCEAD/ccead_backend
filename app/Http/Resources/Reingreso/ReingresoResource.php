@@ -12,7 +12,7 @@ class ReingresoResource extends JsonResource
         return [
             'id' => $this->id,
             'codigo' => $this->codigo,
-            'fecha' => $this->fecha,
+            'fecha' => Carbon::parse($this->fecha)->format('d/m/Y h:i'),
             'observacion' => $this->observacion,
             'estado' => $this->estado === 0 ? 'ANULADO' : 'RECIBIDO',
             'salida' => $this->salida->codigo,

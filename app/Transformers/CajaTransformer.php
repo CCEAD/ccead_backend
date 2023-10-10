@@ -18,7 +18,7 @@ class CajaTransformer extends Transformer
 
     public function listTransform($data)
     {
-        switch ($data['estado_id']) {
+        switch ($data['estado']) {
             case 0:
                 $estado = "PENDIENTE";
                 break;

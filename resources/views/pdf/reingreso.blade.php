@@ -137,7 +137,15 @@
                       <span style="font-size: 12px; font-weight: bold; text-decoration: underline;">Contenido No Ingresado</span>
                       <div style="font-size: 10px;">
                         @foreach($caja['carpetas']['retiradas'] as $retirada)
-                          <div style="border: 1px solid black; border-radius: 3px; width: 122px; display: inline-block; margin-left: 4px;">{{ $retirada['nro_declaracion'] }}</div>
+                          @if ($retirada['nro_declaracion'])
+                            <div style="border: 1px solid black; width: 122px; display: inline-block; margin-left: 4px;">
+                              <center>{{ $retirada['nro_declaracion'] }}</center>
+                            </div>
+                          @else
+                            <div style="border: 1px solid black; width: 122px; display: inline-block; margin-left: 4px;">
+                              <center>{{ $retirada['nro_registro'] }}</center>
+                            </div>
+                          @endif
                         @endforeach
                       </div>
                     </div>
@@ -149,7 +157,15 @@
                       <span style="font-size: 12px; font-weight: bold; text-decoration: underline;">Contenido Nuevo Ingresado</span>
                       <div style="font-size: 10px;">
                         @foreach($caja['carpetas']['agregadas'] as $agregada)
-                          <div style="border: 1px solid black; border-radius: 3px; width: 122px; display: inline-block; margin-left: 4px;">{{ $agregada['nro_declaracion'] }}</div>
+                          @if ($agregada['nro_declaracion'])
+                            <div style="border: 1px solid black; width: 122px; display: inline-block; margin-left: 4px;">
+                              <center>{{ $agregada['nro_declaracion'] }}</center>
+                            </div>
+                          @else
+                            <div style="border: 1px solid black; width: 122px; display: inline-block; margin-left: 4px;">
+                              <center>{{ $agregada['nro_registro'] }}</center>
+                            </div>
+                          @endif
                         @endforeach
                       </div>
                     </div>

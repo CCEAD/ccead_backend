@@ -10,7 +10,7 @@ class CajaCarpetasDetailResource extends JsonResource
 {
     public function toArray($request)
     {
-        switch ($this->estado_id) {
+        switch ($this->estado) {
             case 0:
                 $estado = "PENDIENTE";
                 break;
@@ -24,7 +24,7 @@ class CajaCarpetasDetailResource extends JsonResource
                 $estado = "RETIRADA";
         };
         
-        if ($this->estado_id >= 1) {
+        if ($this->estado >= 1) {
             $cubi = collect($this->ingresos)->transform(function($ingreso) {
                 return [
                     'active' => $ingreso->pivot->active,
@@ -45,7 +45,7 @@ class CajaCarpetasDetailResource extends JsonResource
             'cant_carpetas' => $this->cant_carpetas,
             'stock_carpetas' => $this->carpetas()->where('estado', true)->count(),
             'observaciones' => $this->observaciones,
-            'estado' => ['title' => $estado],
+            'estado' => $estado,
             'ubigeo' => $cubi,
             'carpetas' => collect($this->carpetas)->transform(function($carpeta){
                 return new CarpetaEditResource($carpeta);

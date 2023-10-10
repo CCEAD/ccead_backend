@@ -36,25 +36,25 @@ class IngresoAdminCollection extends ResourceCollection
                 'fecha_aprobacion' => $ingreso->fecha_aprobacion,
                 'fecha_entrega' => $ingreso->fecha_entrega,
                 'observacion' => $ingreso->observacion,
+                // 'total_cajas' => $ingreso->cajas()->count(),
+                // 'total_carpetas' => $ingreso->carpetas()->count(),
+                // 'cajas' => collect($ingreso->cajas)->transform(function($caja) use ($ingreso){
+                //     if ($ingreso->estado == 2) {
+                //         $cubi = collect($caja->detalle_ingreso()->where('ingreso_id', $ingreso->id)->get())->first()->codigo;
+                //     } else {
+                //         $cubi = null;
+                //     }
+                //     return [
+                //         'id' => $caja->id,
+                //         'gestion' => $caja->gestion,
+                //         'cod_interno' => $caja->cod_interno,
+                //         'cubi' => $cubi,
+                //         'carpetas' => collect($caja->carpetas)->transform(function($carpeta){
+                //             return new CarpetaAdminResource($carpeta);
+                //         })
+                //    ];
+                // }),
                 'estado' => $estado,
-                'total_cajas' => $ingreso->cajas()->count(),
-                'total_carpetas' => $ingreso->carpetas()->count(),
-                'cajas' => collect($ingreso->cajas)->transform(function($caja) use ($ingreso){
-                    if ($ingreso->estado == 2) {
-                        $cubi = collect($caja->detalle_ingreso()->where('ingreso_id', $ingreso->id)->get())->first()->codigo;
-                    } else {
-                        $cubi = null;
-                    }
-                    return [
-                        'id' => $caja->id,
-                        'gestion' => $caja->gestion,
-                        'cod_interno' => $caja->cod_interno,
-                        'cubi' => $cubi,
-                        'carpetas' => collect($caja->carpetas)->transform(function($carpeta){
-                            return new CarpetaAdminResource($carpeta);
-                        })
-                   ];
-                }),
                 'created_at' => Carbon::parse($ingreso->created_at)->format('d/m/Y'),
                 'updated_at' => Carbon::parse($ingreso->updated_at)->format('d/m/Y'),
             ];

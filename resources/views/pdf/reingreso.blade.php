@@ -131,44 +131,46 @@
             </th>
             <tr style="background-color: #F2FFF4;">
               <td>
-                @if (isset($caja['carpetas']['retiradas']))
-                  @if (count($caja['carpetas']['retiradas']) > 0)
-                    <div style="padding: 5px;">
-                      <span style="font-size: 12px; font-weight: bold; text-decoration: underline;">Contenido No Ingresado</span>
-                      <div style="font-size: 10px;">
-                        @foreach($caja['carpetas']['retiradas'] as $retirada)
-                          @if ($retirada['nro_declaracion'])
-                            <div style="border: 1px solid black; width: 122px; display: inline-block; margin-left: 4px;">
-                              <center>{{ $retirada['nro_declaracion'] }}</center>
-                            </div>
-                          @else
-                            <div style="border: 1px solid black; width: 122px; display: inline-block; margin-left: 4px;">
-                              <center>{{ $retirada['nro_registro'] }}</center>
-                            </div>
-                          @endif
-                        @endforeach
+                @if (count($caja['carpetas']) > 0)
+                  @if (isset($caja['carpetas']['retiradas']))
+                    @if (count($caja['carpetas']['retiradas']) > 0)
+                      <div style="padding: 5px;">
+                        <span style="font-size: 12px; font-weight: bold; text-decoration: underline;">Contenido No Ingresado</span>
+                        <div style="font-size: 10px;">
+                          @foreach($caja['carpetas']['retiradas'] as $retirada)
+                            @if ($retirada['nro_declaracion'])
+                              <div style="border: 1px solid black; width: 122px; display: inline-block; margin-left: 4px;">
+                                <center>{{ $retirada['nro_declaracion'] }}</center>
+                              </div>
+                            @else
+                              <div style="border: 1px solid black; width: 122px; display: inline-block; margin-left: 4px;">
+                                <center>{{ $retirada['nro_registro'] }}</center>
+                              </div>
+                            @endif
+                          @endforeach
+                        </div>
                       </div>
-                    </div>
+                    @endif
                   @endif
-                @endif
-                @if (isset($caja['carpetas']['agregadas']))
-                  @if (count($caja['carpetas']['agregadas']) > 0)
-                    <div style="padding: 5px;">
-                      <span style="font-size: 12px; font-weight: bold; text-decoration: underline;">Contenido Nuevo Ingresado</span>
-                      <div style="font-size: 10px;">
-                        @foreach($caja['carpetas']['agregadas'] as $agregada)
-                          @if ($agregada['nro_declaracion'])
-                            <div style="border: 1px solid black; width: 122px; display: inline-block; margin-left: 4px;">
-                              <center>{{ $agregada['nro_declaracion'] }}</center>
-                            </div>
-                          @else
-                            <div style="border: 1px solid black; width: 122px; display: inline-block; margin-left: 4px;">
-                              <center>{{ $agregada['nro_registro'] }}</center>
-                            </div>
-                          @endif
-                        @endforeach
+                  @if (isset($caja['carpetas']['agregadas']))
+                    @if (count($caja['carpetas']['agregadas']) > 0)
+                      <div style="padding: 5px;">
+                        <span style="font-size: 12px; font-weight: bold; text-decoration: underline;">Contenido Nuevo Ingresado</span>
+                        <div style="font-size: 10px;">
+                          @foreach($caja['carpetas']['agregadas'] as $agregada)
+                            @if ($agregada['nro_declaracion'])
+                              <div style="border: 1px solid black; width: 122px; display: inline-block; margin-left: 4px;">
+                                <center>{{ $agregada['nro_declaracion'] }}</center>
+                              </div>
+                            @else
+                              <div style="border: 1px solid black; width: 122px; display: inline-block; margin-left: 4px;">
+                                <center>{{ $agregada['nro_registro'] }}</center>
+                              </div>
+                            @endif
+                          @endforeach
+                        </div>
                       </div>
-                    </div>
+                    @endif
                   @endif
                 @endif
               </td>
@@ -182,7 +184,7 @@
         <div style="display: inline-block; margin: 0 10px 0 0; border: 1px solid #707070; color: black; height: 60px; width: 49%"></div>
         <div style="display: inline-block; border: 1px solid #707070; color: black; height: 60px; width: 49%"></div>
         <div style="display: inline-block; margin: 0 10px 0 0;border: 1px solid #707070; color: black; height: 30px; width: 49%">
-          <span style="display: table; margin: 0 auto; font-weight: bold; width: 100px;">CCEAD S.A.</span>
+          <span style="display: table; margin: 0 auto; font-weight: bold; width: 130px;">CCEAD S.A.</span>
         </div>
         <div style="display: inline-block; border: 1px solid #707070; color: black; height: 30px; width: 49%">
           <span style="display: table; margin: 0 auto; font-weight: bold;">DESPACHANTE</span>

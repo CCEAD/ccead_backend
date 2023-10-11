@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use App\Filters\Search;
 
-class CajaSearch extends Search
+class CajaSearchPendiente extends Search
 {
 	public static function checkSortFilter(Request $request, Builder $query)
     {
@@ -27,18 +27,6 @@ class CajaSearch extends Search
 
     protected static function getResults(Builder $query, Request $request)
     {
-        // if ($request->url() == config('services.server.url').'cajas/pendientes') {
-        //     return $query->cajasPorAgencia(get_user_agencia())->pendiente()->get();
-        // }
-
-        // if ($request->url() == config('services.server.url').'cajas/activas') {
-        //     return $query->cajasPorAgencia(get_user_agencia())->activa()->get();
-        // }
-
-        if (get_user_agencia() == 1) {
-            return $query->cajasPorAgencia($request->id)->paginate($request->take); 
-        } else {
-            return $query->cajasPorAgencia(get_user_agencia())->paginate($request->take);
-        }
+        return $query->cajasPorAgencia(get_user_agencia())->pendiente()->get();
     }
 }

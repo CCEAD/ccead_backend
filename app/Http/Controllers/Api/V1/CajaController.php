@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Caja\StoreCajaRequest;
 use App\Http\Requests\Caja\UpdateCajaRequest;
 use App\Filters\CajaSearch\CajaSearch;
+use App\Filters\CajaSearch\CajaSearchPendiente;
+use App\Filters\CajaSearch\CajaSearchActiva;
 use App\Filters\CajaSearch\Searches\CajasFilter;
 use App\Http\Resources\Caja\CajaResource;
 use App\Http\Resources\Caja\CajaEditResource;
@@ -214,10 +216,10 @@ class CajaController extends ApiController
         // return new CajaEditCollection($cajas);
 
         if ($request->filled('filter.filters')) {
-            return new CajaCollection(CajaSearch::apply($request, $this->caja));
+            return new CajaCollection(CajaSearchPendiente::apply($request, $this->caja));
         }
 
-        $cajas = CajaSearch::checkSortFilter($request, $this->caja->newQuery());
+        $cajas = CajaSearchPendiente::checkSortFilter($request, $this->caja->newQuery());
 
         return new CajaCollection($cajas->cajasPorAgencia(get_user_agencia())->pendiente()->get()); 
     }
@@ -234,10 +236,10 @@ class CajaController extends ApiController
         // return new CajaEditCollection($cajas);
 
         if ($request->filled('filter.filters')) {
-            return new CajaCollection(CajaSearch::apply($request, $this->caja));
+            return new CajaCollection(CajaSearchActiva::apply($request, $this->caja));
         }
 
-        $cajas = CajaSearch::checkSortFilter($request, $this->caja->newQuery());
+        $cajas = CajaSearchActiva::checkSortFilter($request, $this->caja->newQuery());
 
         return new CajaCollection($cajas->cajasPorAgencia(get_user_agencia())->activa()->get());
     }

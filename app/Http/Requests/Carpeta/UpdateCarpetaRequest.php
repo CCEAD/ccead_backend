@@ -14,7 +14,7 @@ class UpdateCarpetaRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'nro_declaracion' => 'required|max:64',
+            'nro_declaracion' => 'nullable|max:64',
             'nro_registro' => 'nullable|max:64',
         ];
 

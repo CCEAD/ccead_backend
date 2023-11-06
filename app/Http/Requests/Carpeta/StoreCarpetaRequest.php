@@ -15,9 +15,9 @@ class StoreCarpetaRequest extends FormRequest
     {
         $rules = [
             //'codigo' => 'required|max:64',
-            'nro_declaracion' => 'required|max:64',
+            'nro_declaracion' => 'nullable|max:64',
             'nro_registro' => 'nullable|max:64',
-            'fecha_aceptacion' => 'required|date_format:Y-m-d',
+            'fecha_aceptacion' => 'nullable|date_format:Y-m-d',
             'regimen_aduanero' => 'nullable|max:128',
             'modalidad_regimen' => 'nullable|max:64',
             'modalidad_despacho' => 'nullable|max:64',

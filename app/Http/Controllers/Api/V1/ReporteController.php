@@ -112,6 +112,9 @@ class ReporteController extends ApiController
             ->when($request->gestion, function($query) use ($request) {
                 $query->where('cajas.gestion', $request->gestion);
             })
+            ->when($request->aduana, function($query) use ($request) {
+                $query->where('aduanas.id', $request->aduana);
+            })
             ->orderBy('aduanas.id')
             ->groupBy('carpetas.canal', 'aduanas.descripcion', 'aduanas.id')
             ->get();
@@ -210,6 +213,39 @@ class ReporteController extends ApiController
 
         // Convierte el arreglo asociativo en un arreglo indexado
         $finalResult = array_values($finalResult);
+
+        return $this->respond($finalResult);
+    }
+
+    public function totalGestionGrafico(Request $request)
+    {
+        $resultado = DB::table('cajas')
+            ->join('carpetas', 'cajas.id', '=', 'carpetas.caja_id')
+            ->join('aduanas', 'aduanas.id', '=', 'carpetas.aduana_id')
+            ->select('cajas.gestion', 'aduanas.descripcion')
+            ->groupBy('cajas.gestion', 'aduanas.descripcion')
+            ->orderBy('aduanas.id', 'asc')
+            ->selectRaw('COUNT(*) as count')
+            ->where('cajas.agencia_id', get_user_agencia())
+            ->when($request->gestion, function($query) use ($request) {
+                $query->where('cajas.gestion', $request->gestion);
+            })
+            ->when($request->aduana, function($query) use ($request) {
+                $query->where('aduanas.id', $request->aduana);
+            })
+            ->get();
+
+        $agrupado = $resultado->groupBy('gestion');
+
+        $finalResult = [];
+
+        foreach ($agrupado as $gestion => $data) {
+            $formattedData = $data->pluck('count', 'descripcion')->toArray();
+            $finalResult[] = [
+                'name' => $gestion,
+                'data' => $formattedData,
+            ];
+        }
 
         return $this->respond($finalResult);
     }

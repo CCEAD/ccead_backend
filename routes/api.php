@@ -186,7 +186,8 @@ Route::prefix('v1')->group(function () {
         Route::post('reportes/total/agencia', [ReporteController::class, 'totalInvGestionAgencia']);
         Route::post('reportes/aduana/agencia', [ReporteController::class, 'totalInvAduanaAgencia']);
         Route::post('reportes/canal/grafico', [ReporteController::class, 'totalCanalGrafico']);
-        
+        Route::post('reportes/gestion/grafico', [ReporteController::class, 'totalGestionGrafico']);
+
         Route::post('reportes/pdf_download', [ReporteController::class, 'pdfDownload']);
 
         //Reportes

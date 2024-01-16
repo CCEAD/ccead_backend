@@ -102,7 +102,7 @@ return [
             'username' => env('DB_USERNAME_MONGO'),
             'password' => env('DB_PASSWORD_MONGO'),
             'options' => [
-                'database' => 'ccead'
+                'database' => 'ccead_bd'
             ]
         ],
     ],

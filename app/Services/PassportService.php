@@ -35,6 +35,7 @@ class PassportService
                 'name' => $user->name,
                 'email' => $user->email,
                 'agencia' => $user->agencia->razon_social,
+                'digital' => $user->agencia->digital == 0 ? false : true,
                 'acl' => $acl
             ];
     

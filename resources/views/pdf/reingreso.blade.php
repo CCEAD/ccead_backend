@@ -72,8 +72,6 @@
       color: #721c24;
       padding: 10px;
       margin: 10px;
-      display: flex;
-      align-items: center;
     }
 
     .alert-icon {
@@ -82,10 +80,16 @@
       border-radius: 50%;
       width: 30px;
       height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      text-align: center;
+      font-size: 20px;
+      line-height: 30px;
       margin-right: 10px;
+      display: inline-block;
+    }
+
+    .alert-text {
+      display: inline-block;
+      vertical-align: middle;
     }
   </style>
 </head>
@@ -198,7 +202,7 @@
                 @else
                 <div class="alert">
                   <div class="alert-icon">!</div>
-                  <div>Ingreso en el mismo estado.</div>
+                  <div class="alert-text">Ingreso en el mismo estado.</div>
                 </div>
                 @endif
               </td>

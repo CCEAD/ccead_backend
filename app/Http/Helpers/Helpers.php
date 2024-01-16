@@ -24,7 +24,7 @@
         // $searchTerm = '+' . $term . '*';
  
         // return $searchTerm;
-        if(strlen($term) >= 4) {
+        if(strlen($term) >= 3) {
             $searchTerm = '"+' . $term . '*"';
         } else if(strlen($term) === 0) {
             $searchTerm = '';

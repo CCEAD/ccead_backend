@@ -18,6 +18,8 @@ use App\Http\Controllers\Api\V1\RoleController;
 use App\Http\Controllers\Api\V1\PermisoController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\ReporteController;
+use App\Http\Controllers\Api\V1\GrupoController;
+use App\Http\Controllers\Api\V1\MongoController;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
@@ -28,7 +30,7 @@ use App\Mail\SolicitudIngreso;
 Route::prefix('v1')->group(function () {
     
     Route::get('invoice-download', [SalidaController::class, 'download']);
-    Route::get('invoice', [SalidaController::class, 'test']);
+    Route::get('invoice', [CajaController::class, 'test']);
 
     Route::post('login', [AuthController::class, 'login']);
     Route::post('user/verification', [AuthController::class, 'userVerification']);
@@ -65,6 +67,15 @@ Route::prefix('v1')->group(function () {
         // }
     });
 
+    Route::get('box/folders', [MongoController::class, 'getFoldersByBox']);
+    Route::get('folder/files/{id}', [MongoController::class, 'getFilesByFolderId']);
+    Route::post('files/delete', [MongoController::class, 'deleteFileById']);
+    Route::post('files/update', [MongoController::class, 'updateFileById']);
+    Route::post('files/description', [MongoController::class, 'saveFileDescription']);
+    Route::get('files/search', [MongoController::class, 'getFileFolder']);
+    Route::get('files/download/z1', [MongoController::class, 'generateAndDownloadPdfZ1']);
+    Route::get('files/download/z2', [MongoController::class, 'generateAndDownloadPdfZ2']);
+
     Route::group(['middleware' => ['auth:api', 'teams_permission:api', 'user_active:api']], function() {
 
         Route::get('permisos', [AuthController::class, 'permisos']);
@@ -72,6 +83,7 @@ Route::prefix('v1')->group(function () {
         Route::post('logout', [AuthController::class, 'logout']);
 
         Route::get('aduanas/listing', [AduanaController::class, 'listing']);
+        Route::get('grupos/listing', [GrupoController::class, 'listing']);
 
         Route::get('agencias', [AgenciaController::class, 'index'])->middleware('permission:agencia.listar');
         Route::post('agencias/alta', [AgenciaController::class, 'altaAgencia'])->middleware('permission:agencia.alta');

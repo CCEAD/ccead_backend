@@ -25,10 +25,12 @@ class CarpetaResource extends JsonResource
 
         return [
             'id' => $this->id,
+            'gestion' => $this->caja->gestion,
             'nro_declaracion' => $this->nro_declaracion,
             'nro_registro' => $this->nro_registro,
             'fecha_aceptacion' => Carbon::parse($this->fecha_aceptacion)->format('d/m/Y H:i'),
             'aduana_tramite' =>  $this->aduana ? $this->aduana->text : 'N/A',
+            'aduana_codigo' =>  $this->aduana ? $this->aduana->codigo : 'N/A',
             'regimen_aduanero' => $this->regimen_aduanero,
             'modalidad_regimen' => $this->modalidad_regimen,
             'modalidad_despacho' => $this->modalidad_despacho,

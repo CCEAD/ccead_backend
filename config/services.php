@@ -53,5 +53,7 @@ return [
 
     'python' => [
         'scraping' => env('PY_SCRIPT_SCRAPING'),
+        'dig1' => env('PY_SCRIPT_DIG1'),
+        'dig2' => env('PY_SCRIPT_DIG2'),
     ]
 ];

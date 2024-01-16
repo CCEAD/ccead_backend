@@ -31,8 +31,8 @@ class IngresoDetalleResource extends JsonResource
             'id' => $this->id,
             'codigo' => $this->codigo,
             'fecha_solicitud' => Carbon::parse($this->fecha_solicitud)->format('d/m/Y'),
-            'fecha_aprobacion' => Carbon::parse($this->fecha_aprobacion)->format('d/m/Y'),
-            'fecha_entrega' => Carbon::parse($this->fecha_entrega)->format('d/m/Y'),
+            'fecha_aprobacion' => $this->fecha_aprobacion ? Carbon::parse($this->fecha_aprobacion)->format('d/m/Y') : '(Sin Fecha)',
+            'fecha_entrega' => $this->fecha_entrega ? Carbon::parse($this->fecha_entrega)->format('d/m/Y') : '(Sin Fecha)',
             'observacion' => $this->observacion,
             'estado' => $estado,
             'cajas' => collect($this->cajas)->transform(function($caja) {

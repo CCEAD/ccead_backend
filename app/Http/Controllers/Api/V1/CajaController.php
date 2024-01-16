@@ -258,4 +258,9 @@ class CajaController extends ApiController
     {
         return $this->service->manyExcelDownload($request);
     }
+
+    public function test()
+    {
+        return view('pdf.test6');
+    }
 }

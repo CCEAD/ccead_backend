@@ -11,7 +11,6 @@ from bson.objectid import ObjectId
 import zipfile
 from dotenv import load_dotenv
 from urllib.parse import quote_plus
-
 load_dotenv()
 
 mongo_user = os.getenv('MONGO_USER', '')
@@ -142,9 +141,11 @@ if __name__ == "__main__":
     aduana = sys.argv[4] if len(sys.argv) > 2 else "701"
     agencia = sys.argv[5] if len(sys.argv) > 2 else "CCEAD SA"
 
+    agencia_safe = agencia.replace(' ', '_')
+
     # Llamar a la función para reconstruir los TIFF a JPEG con compresión adicional
-    image_directory = reconstruct_tiff_to_jpg(folder_id, agencia)
+    image_directory = reconstruct_tiff_to_jpg(folder_id, agencia_safe)
 
     # Llamar a la función para crear el PDF combinado y comprimir la carpeta
-    create_pdf_from_images(dui, year, aduana, agencia)
-    shutil.rmtree(f'{mongo_path}/{agencia}/temp_images_1')
+    create_pdf_from_images(dui, year, aduana, agencia_safe)
+    shutil.rmtree(f'{mongo_path}/{agencia_safe}/temp_images_1')

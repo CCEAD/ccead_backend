@@ -216,9 +216,11 @@ class MongoController extends ApiController
 
             $agenciaArgument = escapeshellarg($agencia);
 
+            $agencia_safe = str_replace(' ', '_', $agencia);
+
             shell_exec("$python $script $folder_id $dui $year $aduana $agenciaArgument");
 
-            $zipPath = "{$path}/{$agencia}/temp_pdfs_1/{$year}_{$dui}.zip";
+            $zipPath = "{$path}/{$agencia_safe}/temp_pdfs_1/{$year}_{$dui}.zip";
 
             return response()->download($zipPath)->deleteFileAfterSend(true);
 
@@ -246,9 +248,11 @@ class MongoController extends ApiController
 
             $agenciaArgument = escapeshellarg($agencia);
 
+            $agencia_safe = str_replace(' ', '_', $agencia);
+
             shell_exec("$python $script $folder_id $dui $year $aduana $agenciaArgument");
 
-            $zipPath = "{$path}/{$agencia}/temp_pdfs_2/{$year}_{$dui}.zip";
+            $zipPath = "{$path}/{$agencia_safe}/temp_pdfs_2/{$year}_{$dui}.zip";
 
             return response()->download($zipPath)->deleteFileAfterSend(true);
 

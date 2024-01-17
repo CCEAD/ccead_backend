@@ -123,6 +123,9 @@ def create_pdfs_by_group(dui, year, aduana, group_mapping, agencia):
     # Directorio donde se guardaron las imágenes JPEG
     input_directory = f"{mongo_path}/{agencia}/temp_images_2"
 
+    # Crear el directorio de imagenes
+    os.makedirs(input_directory, exist_ok=True)
+
     # Nombre del directorio de salida
     output_directory_base = f"{mongo_path}/{agencia}/temp_pdfs_2/{aduana}/{year}/{dui}"
 

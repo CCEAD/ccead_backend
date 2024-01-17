@@ -200,6 +200,7 @@ class MongoController extends ApiController
     public function generateAndDownloadPdfZ1(Request $request)
     {
         $script = config('services.python.dig1');
+        $path = config('services.mongo.path');
 
         try {
             $folder_id = $request->input('folder_id');
@@ -216,7 +217,7 @@ class MongoController extends ApiController
 
             shell_exec("python $script $folder_id $dui $year $aduana $agenciaArgument");
 
-            $zipPath = "C:/laragon/www/ccead_backend/agencias/{$agencia}/temp_pdfs_1/{$year}_{$dui}.zip";
+            $zipPath = "{$path}/{$agencia}/temp_pdfs_1/{$year}_{$dui}.zip";
 
             return response()->download($zipPath)->deleteFileAfterSend(true);
 
@@ -228,7 +229,8 @@ class MongoController extends ApiController
     public function generateAndDownloadPdfZ2(Request $request)
     {
         $script = config('services.python.dig2');
-
+        $path = config('services.mongo.path');
+        
         try {
             $folder_id = $request->input('folder_id');
 
@@ -244,7 +246,7 @@ class MongoController extends ApiController
 
             shell_exec("python $script $folder_id $dui $year $aduana $agenciaArgument");
 
-            $zipPath = "C:/laragon/www/ccead_backend/agencias/{$agencia}/temp_pdfs_2/{$year}_{$dui}.zip";
+            $zipPath = "{$path}/{$agencia}/temp_pdfs_2/{$year}_{$dui}.zip";
 
             return response()->download($zipPath)->deleteFileAfterSend(true);
 

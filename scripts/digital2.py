@@ -150,7 +150,7 @@ def create_pdfs_by_group(dui, year, aduana, group_mapping, agencia):
         # Verificar si el grupo está en el mapeo
         if group in group_mapping:
             # Obtener el nombre del grupo
-            group_name = group_mapping[group]
+            group_name = group_mapping[group].replace(' ', '_')
 
             # Crear el directorio para el grupo
             output_directory = os.path.join(output_directory_base, aduana, year, dui, group_name)
@@ -194,16 +194,18 @@ if __name__ == "__main__":
     aduana = sys.argv[4] if len(sys.argv) > 2 else "701"
     agencia = sys.argv[5] if len(sys.argv) > 2 else "CCEAD SA"
 
+    agencia_safe = agencia.replace(' ', '_')
+
     group_mapping_data = get_group_mapping_from_database()
 
     # Convertir el resultado a un diccionario
     group_mapping = {entry['id']: entry['name'] for entry in group_mapping_data}
 
     # Llamar a la función para reconstruir los TIFF a JPEG con compresión adicional
-    image_directory = reconstruct_tiff_to_jpg(folder_id, agencia)
+    image_directory = reconstruct_tiff_to_jpg(folder_id, agencia_safe)
 
     # Llamar a la función para crear el PDF combinado y comprimir la carpeta
-    create_pdfs_by_group(dui, year, aduana, group_mapping, agencia)
+    create_pdfs_by_group(dui, year, aduana, group_mapping, agencia_safe)
 
     # Eliminar directorio de imágenes
-    shutil.rmtree(f'{mongo_path}/{agencia}/temp_images_2')
+    shutil.rmtree(f'{mongo_path}/{agencia_safe}/temp_images_2')

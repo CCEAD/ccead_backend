@@ -198,7 +198,7 @@ class CajaController extends ApiController
             return new CarpetaTreeCollection($carpetas);
         } 
 
-        $cajas = $this->caja->cajasPorAgencia(get_user_agencia())->get();
+        $cajas = $this->caja->cajasPorAgencia(get_user_agencia())->where('digitalizado', true)->get();
         
         return new CajaTreeCollection($cajas);
          

@@ -9,9 +9,21 @@ from pymongo import MongoClient
 from gridfs import GridFS
 from bson.objectid import ObjectId
 import zipfile
+from dotenv import load_dotenv
+
+load_dotenv()
+
+mongo_user = os.getenv('MONGO_USER', '')
+mongo_password = os.getenv('MONGO_PASSWORD', '')
+mongo_host = os.getenv('MONGO_HOST', '')
+mongo_port = os.getenv('MONGO_PORT', '')
+
+mongo_path = os.getenv('MONGO_PATH', '')
+
+connection_string = f"mongodb://{mongo_user}:{mongo_password}@{mongo_host}:{mongo_port}/"
 
 # Configuración de MongoDB
-client = MongoClient('localhost', 27017)
+client = MongoClient(connection_string)
 db = client['ccead_bd']
 fs = GridFS(db)
 
@@ -40,7 +52,7 @@ def reconstruct_tiff_to_jpg(folder_id, agencia):
         return None
 
     # Crear un directorio para almacenar las imágenes JPEG
-    output_directory = f"C:/laragon/www/ccead_backend/agencias/{agencia}/temp_images_1"
+    output_directory = f"{mongo_path}/{agencia}/temp_images_1"
     os.makedirs(output_directory, exist_ok=True)
 
     # Buscar los documentos fs.files relacionados con el folder_id
@@ -75,10 +87,10 @@ def reconstruct_tiff_to_jpg(folder_id, agencia):
 
 def create_pdf_from_images(dui, year, aduana, agencia):
     # Directorio donde se guardaron las imágenes JPEG
-    input_directory = f"C:/laragon/www/ccead_backend/agencias/{agencia}/temp_images_1"
+    input_directory = f"{mongo_path}/{agencia}/temp_images_1"
 
     # Nombre del directorio de salida
-    output_directory = f"C:/laragon/www/ccead_backend/agencias/{agencia}/temp_pdfs_1/{aduana}/{year}/{dui}"
+    output_directory = f"{mongo_path}/{agencia}/temp_pdfs_1/{aduana}/{year}/{dui}"
 
     # Crear el directorio de salida si no existe
     os.makedirs(output_directory, exist_ok=True)
@@ -113,12 +125,12 @@ def create_pdf_from_images(dui, year, aduana, agencia):
     print(f"PDF combinado creado y guardado en {output_pdf_path}")
 
     # Cambiar al directorio temp_pdfs y comprimir
-    os.chdir(f"C:/laragon/www/ccead_backend/agencias/{agencia}/temp_pdfs_1")
+    os.chdir(f"{mongo_path}/{agencia}/temp_pdfs_1")
     with zipfile.ZipFile(f"{year}_{dui}.zip", 'w') as zipf:
         zipf.write(f"{aduana}/{year}/{dui}/{dui}.pdf", arcname=f"{aduana}/{year}/{dui}/{dui}.pdf")
 
     # Eliminar directorios y archivos temporales
-    shutil.rmtree(f"C:/laragon/www/ccead_backend/agencias/{agencia}/temp_pdfs_1/{aduana}")
+    shutil.rmtree(f"{mongo_path}/{agencia}/temp_pdfs_1/{aduana}")
     
 
 if __name__ == "__main__":
@@ -134,4 +146,4 @@ if __name__ == "__main__":
 
     # Llamar a la función para crear el PDF combinado y comprimir la carpeta
     create_pdf_from_images(dui, year, aduana, agencia)
-    shutil.rmtree(f'C:/laragon/www/ccead_backend/agencias/{agencia}/temp_images_1')
+    shutil.rmtree(f'{mongo_path}/{agencia}/temp_images_1')

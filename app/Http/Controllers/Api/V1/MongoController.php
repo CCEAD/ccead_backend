@@ -24,7 +24,15 @@ class MongoController extends ApiController
 
     public function __construct()
     {
-        $this->mongoClient = new \MongoDB\Client('mongodb://localhost:27017');
+        $mongoUser = config('services.mongo.user');
+        $mongoPassword = config('services.mongo.password');
+        $mongoHost = config('services.mongo.host');
+        $mongoPort = config('services.mongo.port');
+        $encodedPassword = urlencode($mongoPassword);
+
+        $connectionString = "mongodb://$mongoUser:$encodedPassword@$mongoHost:$mongoPort";
+
+        $this->mongoClient = new \MongoDB\Client($connectionString);
         $this->foldersCollection = $this->mongoClient->selectDatabase('ccead_bd')->selectCollection('folders');
         $this->filesCollection = $this->mongoClient->selectDatabase('ccead_bd')->selectCollection('fs.files');
         $this->chunksCollection = $this->mongoClient->selectDatabase('ccead_bd')->selectCollection('fs.chunks');

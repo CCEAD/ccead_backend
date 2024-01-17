@@ -9,9 +9,26 @@ from pymongo import MongoClient
 from gridfs import GridFS
 from bson.objectid import ObjectId
 import pymysql
+from dotenv import load_dotenv
+
+load_dotenv()
+
+mongo_user = os.getenv('MONGO_USER', '')
+mongo_password = os.getenv('MONGO_PASSWORD', '')
+mongo_host = os.getenv('MONGO_HOST', '')
+mongo_port = os.getenv('MONGO_PORT', '')
+
+mysql_user = os.getenv('DB_USERNAME', '')
+mysql_password = os.getenv('DB_PASSWORD', '')
+mysql_host = os.getenv('DB_HOST', '')
+mysql_db = os.getenv('DB_DATABASE', '')
+
+mongo_path = os.getenv('MONGO_PATH', '')
+
+connection_string = f"mongodb://{mongo_user}:{mongo_password}@{mongo_host}:{mongo_port}/"
 
 # Configuración de MongoDB
-client = MongoClient('localhost', 27017)
+client = MongoClient(connection_string)
 db = client['ccead_bd']
 fs = GridFS(db)
 
@@ -19,10 +36,10 @@ def get_group_mapping_from_database():
     try:
         # Conectar a la base de datos MySQL
         connection = pymysql.connect(
-            host='localhost',
-            user='root',
-            password='',
-            database='ccead_bd3',
+            host=mysql_host,
+            user=mysql_user,
+            password=mysql_password,
+            database=mysql_db,
             charset='utf8mb4',
             cursorclass=pymysql.cursors.DictCursor
         )
@@ -68,7 +85,7 @@ def reconstruct_tiff_to_jpg(folder_id, agencia):
         return None
 
     # Crear un directorio para almacenar las imágenes JPEG
-    output_directory = f"C:/laragon/www/ccead_backend/agencias/{agencia}/temp_images_2"
+    output_directory = f"{mongo_path}/{agencia}/temp_images_2"
     os.makedirs(output_directory, exist_ok=True)
 
     # Buscar los documentos fs.files relacionados con el folder_id
@@ -103,10 +120,10 @@ def reconstruct_tiff_to_jpg(folder_id, agencia):
 
 def create_pdfs_by_group(dui, year, aduana, group_mapping, agencia):
     # Directorio donde se guardaron las imágenes JPEG
-    input_directory = f"C:/laragon/www/ccead_backend/agencias/{agencia}/temp_images_2"
+    input_directory = f"{mongo_path}/{agencia}/temp_images_2"
 
     # Nombre del directorio de salida
-    output_directory_base = f"C:/laragon/www/ccead_backend/agencias/{agencia}/temp_pdfs_2/{aduana}/{year}/{dui}"
+    output_directory_base = f"{mongo_path}/{agencia}/temp_pdfs_2/{aduana}/{year}/{dui}"
 
     # Crear el directorio base si no existe
     os.makedirs(output_directory_base, exist_ok=True)
@@ -157,13 +174,13 @@ def create_pdfs_by_group(dui, year, aduana, group_mapping, agencia):
             pdf_canvas.save()
 
     # Comprimir todos los directorios en un archivo ZIP
-    zip_filename = f"C:/laragon/www/ccead_backend/agencias/{agencia}/temp_pdfs_2/{year}_{dui}"
+    zip_filename = f"{mongo_path}/{agencia}/temp_pdfs_2/{year}_{dui}"
     shutil.make_archive(zip_filename, 'zip', output_directory_base)
 
     print(f"Archivos ZIP generados en {zip_filename}")
 
      # Eliminar directorios y archivos temporales
-    shutil.rmtree(f"C:/laragon/www/ccead_backend/agencias/{agencia}/temp_pdfs_2/{aduana}")
+    shutil.rmtree(f"{mongo_path}/{agencia}/temp_pdfs_2/{aduana}")
 
 if __name__ == "__main__":
     # Recibir el _id de folders desde PHP
@@ -185,4 +202,4 @@ if __name__ == "__main__":
     create_pdfs_by_group(dui, year, aduana, group_mapping, agencia)
 
     # Eliminar directorio de imágenes
-    shutil.rmtree(f'C:/laragon/www/ccead_backend/agencias/{agencia}/temp_images_2')
+    shutil.rmtree(f'{mongo_path}/{agencia}/temp_images_2')

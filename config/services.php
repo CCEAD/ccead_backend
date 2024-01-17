@@ -48,7 +48,10 @@ return [
     ],
 
     'mongo' => [
-        'host' => env('DB_HOST_MONGO'),
+        'host' => env('MONGO_HOST'),
+        'port' => env('MONGO_PORT'),
+        'user' => env('MONGO_USER'),
+        'password' => env('MONGO_PASSWORD'),
     ],
 
     'python' => [

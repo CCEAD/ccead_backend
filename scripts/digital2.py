@@ -10,6 +10,7 @@ from gridfs import GridFS
 from bson.objectid import ObjectId
 import pymysql
 from dotenv import load_dotenv
+from urllib.parse import quote_plus
 
 load_dotenv()
 
@@ -25,7 +26,7 @@ mysql_db = os.getenv('DB_DATABASE', '')
 
 mongo_path = os.getenv('MONGO_PATH', '')
 
-connection_string = f"mongodb://{mongo_user}:{mongo_password}@{mongo_host}:{mongo_port}/"
+connection_string = f"mongodb://{quote_plus(mongo_user)}:{quote_plus(mongo_password)}@{mongo_host}:{mongo_port}/"
 
 # Configuración de MongoDB
 client = MongoClient(connection_string)

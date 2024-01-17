@@ -201,6 +201,7 @@ class MongoController extends ApiController
     {
         $script = config('services.python.dig1');
         $path = config('services.mongo.path');
+        $python = config('services.python.url');
 
         try {
             $folder_id = $request->input('folder_id');
@@ -215,7 +216,7 @@ class MongoController extends ApiController
 
             $agenciaArgument = escapeshellarg($agencia);
 
-            shell_exec("python $script $folder_id $dui $year $aduana $agenciaArgument");
+            shell_exec("$python $script $folder_id $dui $year $aduana $agenciaArgument");
 
             $zipPath = "{$path}/{$agencia}/temp_pdfs_1/{$year}_{$dui}.zip";
 
@@ -230,7 +231,8 @@ class MongoController extends ApiController
     {
         $script = config('services.python.dig2');
         $path = config('services.mongo.path');
-        
+        $python = config('services.python.url');
+
         try {
             $folder_id = $request->input('folder_id');
 
@@ -244,7 +246,7 @@ class MongoController extends ApiController
 
             $agenciaArgument = escapeshellarg($agencia);
 
-            shell_exec("python $script $folder_id $dui $year $aduana $agenciaArgument");
+            shell_exec("$python $script $folder_id $dui $year $aduana $agenciaArgument");
 
             $zipPath = "{$path}/{$agencia}/temp_pdfs_2/{$year}_{$dui}.zip";
 

@@ -10,6 +10,7 @@ from gridfs import GridFS
 from bson.objectid import ObjectId
 import zipfile
 from dotenv import load_dotenv
+from urllib.parse import quote_plus
 
 load_dotenv()
 
@@ -20,7 +21,7 @@ mongo_port = os.getenv('MONGO_PORT', '')
 
 mongo_path = os.getenv('MONGO_PATH', '')
 
-connection_string = f"mongodb://{mongo_user}:{mongo_password}@{mongo_host}:{mongo_port}/"
+connection_string = f"mongodb://{quote_plus(mongo_user)}:{quote_plus(mongo_password)}@{mongo_host}:{mongo_port}/"
 
 # Configuración de MongoDB
 client = MongoClient(connection_string)

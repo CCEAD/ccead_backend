@@ -28,7 +28,7 @@ client = MongoClient(connection_string)
 db = client['ccead_bd']
 fs = GridFS(db)
 
-def convert_tiff_to_jpg(tiff_data, quality=15, resize=None):
+def convert_tiff_to_jpg(tiff_data, quality=12, resize=None):
     # Convertir a modo RGB antes de guardar como JPEG
     tiff_data = tiff_data.convert("RGB")
 
@@ -74,7 +74,7 @@ def reconstruct_tiff_to_jpg(folder_id, agencia):
             continue
 
         # Convertir la página TIFF a JPEG con compresión adicional
-        jpg_data = convert_tiff_to_jpg(tiff_image, quality=15, resize=(1600, 1600))
+        jpg_data = convert_tiff_to_jpg(tiff_image, quality=12, resize=(1800, 1800))
 
         # Guardar la imagen JPEG en un archivo con el nombre basado en el índice (i)
         if jpg_data:
@@ -112,7 +112,7 @@ def create_pdf_from_images(dui, year, aduana, agencia):
 
             # Abrir la imagen y redimensionar si es necesario
             img = Image.open(image_path)
-            img.thumbnail((1600, 1600))
+            img.thumbnail((1800, 1800))
 
             # Agregar la imagen al PDF en la posición (0, 0) y ajustar según sea necesario
             pdf_canvas.drawImage(image_path, 0, 0, width=letter[0], height=letter[1], preserveAspectRatio=True, mask='auto')

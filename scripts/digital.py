@@ -117,6 +117,18 @@ def create_pdf_from_images(dui, year, aduana, agencia):
             # Agregar la imagen al PDF en la posición (0, 0) y ajustar según sea necesario
             pdf_canvas.drawImage(image_path, 0, 0, width=letter[0], height=letter[1], preserveAspectRatio=True, mask='auto')
 
+            # Configurar el color del número a un tono más claro (RGB: 0.7, 0.7, 0.7)
+            pdf_canvas.setFillColorRGB(0.6, 0.6, 0.6)
+
+            # Ajustar el tamaño de la fuente y aplicar una escala para engrosar el texto
+            pdf_canvas.setFont("Helvetica", 5 * 2.5)  # Ajustar la escala según sea necesario
+
+            # Agregar el número de orden en la esquina superior derecha con estilo
+            pdf_canvas.drawRightString(letter[0] - 20, letter[1] - 20, str(i + 1))  # Dibujar el número de orden
+
+            # Restaurar la escala de la fuente al valor predeterminado
+            pdf_canvas.setFont("Helvetica", 5)
+
             # Agregar una nueva página para la siguiente imagen
             pdf_canvas.showPage()
 
